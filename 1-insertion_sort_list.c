@@ -9,48 +9,40 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *head, *temp, *swap, *iter;
-	int insert = 1;
+	listint_t *temp, *swap;
 
 	if (list == NULL)
 		return;
 
-	head = *list;
-	iter = head;
 	temp = NULL;
-	swap = NULL;
-	/**
-	printf("parse to head\t");
-	print_list(head);
-	printf("parse to iter\t");
-	print_list(iter);
-	printf("temp nothing\t");
-	print_list(temp);
-	*/
+	swap = (*list)->next;
 
-	while (insert)
+	while (swap != NULL)
 	{
-		insert = 0;
-		temp = head;
-		printf("temp initialized\t");
-		print_list(temp);
-		swap = head->next;
-		printf("swap initialized\t");
-		print_list(swap);
+		temp = swap->prev;
 
-		while (iter)
+		while (temp != NULL)
 		{
-			if (head->n > swap->n)
+			if (temp->n > swap->n)
 			{
-				head->prev = swap->prev;
-				head->next = swap->next;
 				swap->prev = temp->prev;
-				swap->next = temp->next;
-				insert = 1;
+				temp->prev = swap;
+				temp->next = swap->next;
+				swap->next = temp;
+
+				if (swap->next == NULL)
+					swap->next = temp;
+				if (temp->prev == NULL)
+					temp->prev = swap;
+				if (temp->prev == NULL)
+					*list = temp;
+				else if (swap->prev == NULL)
+					*list = swap;
+				print_list(*list);
 			}
-			iter = iter->next;
+			temp = temp->prev;
 		}
-		print_list(*list);
+		swap = swap->next;
 	}
 
 
