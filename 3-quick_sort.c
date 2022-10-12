@@ -1,8 +1,3 @@
-/*
- * File: 3-quick_sort.c
- * Auth: Dagem Tsehay
- */
-
 #include "sort.h"
 
 void swap_ints(int *a, int *b);
